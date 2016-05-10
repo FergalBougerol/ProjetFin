@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-var mongoose = require('mongoose');
+
 
 var routes = require('./app/routes/index');
 var users = require('./app/routes/users');
@@ -119,6 +119,9 @@ client.on('data', function(data) {
     
 });
 
-
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/morpion', function(err) {
+  if (err) { throw err; }
+}); 
 
 module.exports = app;
