@@ -69,49 +69,14 @@ app.use(function (err, req, res, next) {
     });
 });
 
-
-
 // Chargement de socket.io
 var io = require('socket.io').listen(3001);
-
-// Quand un client se connecte, on le note dans la console
-io.sockets.on('connection', function (socket) {
-  socket.emit('message', 'Vous êtes bien connecté !');
-  socket.broadcast.emit('message', 'Un autre client vient de se connecter !');
-
-  socket.on('message', function (message) {
-    console.log('Un client me parle ! Il me dit : ' + message);
-  }); 
-});
-
-var net = require('net');
-
-var server = net.createServer(function(socket) {
-    socket.write('Echo server\r\n');
-    socket.pipe(socket);
-});
-
-server.listen(1337, '127.0.0.1');
-
-/*
-And connect with a tcp client from the command line using netcat, the *nix 
-utility for reading and writing across tcp/udp network connections.  I've only 
-used it for debugging myself.
-$ netcat 127.0.0.1 1337
-You should see:
-> Echo server
-*/
-
-/* Or use this example tcp client written in node.js.  (Originated with 
-example code from 
-http://www.hacksparrow.com/tcp-socket-programming-in-node-js.html.) */
 
 var net = require('net');
 
 var client = new net.Socket();
-client.connect(1337, '127.0.0.1', function() {
+client.connect(3001, '127.0.0.1', function() {
     console.log('Connected');
-    client.write('Hello, server! Love, Client.');
 });
 
 client.on('data', function(data) {
@@ -120,7 +85,7 @@ client.on('data', function(data) {
 });
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/morpion', function(err) {
+mongoose.connect('mongodb://localhost/data', function(err) {
   if (err) { throw err; }
 }); 
 

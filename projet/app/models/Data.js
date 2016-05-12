@@ -17,4 +17,4 @@ var schema = new Schema({
     
 });
 
-exports.model = mongoose.model('Datas', schema, 'Data');
+exports.model = mongoose.model('Data', schema, 'Datas');

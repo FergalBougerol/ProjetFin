@@ -1,27 +1,27 @@
-require('../models/Datas');
+require('../models/Data');
 
 var mongoose = require('mongoose'),
-    Datas = mongoose.model('Datas');
+    Data = mongoose.model('Data');
 
 
-var Data = {
+var Datas = {
     index: function (req, res) {
 
-        Datas.find({}, function (err, Data) {
+        Data.find({}, function (err, Datas) {
             if (err) throw err;
 
             // object of all the DATAS
-            console.log(Data);
+            console.log(Datas);
         });
 
-        res.render('Data/index', {
+        res.render('Datas/index', {
             title: 'home',
             active: 'account'
         });
     },
     create: function (req, res) {
 
-        var u = new Datas({
+        var u = new Data({
             name: req.body.name,
             firstName: req.body.firstname,
             email: req.body.email
@@ -29,7 +29,7 @@ var Data = {
 
         u.save(function (err) {
             if (err) {
-                console.log('Datas inserted');
+                console.log('Data inserted');
             }
         });
 
@@ -37,44 +37,44 @@ var Data = {
     },
     update: function (req, res) {
 
-        Datas.findById(req.params.id, function (err, Datas) {
+        Data.findById(req.params.id, function (err, Data) {
             if (err) throw err;
 
             // change the DATAS location
-            Datas.name = 'Josay';
+            Data.name = 'Josay';
 
             // save the DATA
-            Datas.save(function (err) {
+            Data.save(function (err) {
                 if (err) throw err;
 
-                console.log('Datas successfully updated!');
+                console.log('Data successfully updated!');
             });
 
         });
 
-        res.render('Data/index', {
+        res.render('Datas/index', {
             title: 'home',
             active: 'account'
         });
     },
     delete: function (req, res) {
 
-        Datas.findById(req.params.id, function (err, Datas) {
+        Data.findById(req.params.id, function (err, Data) {
             if (err) throw err;
 
             // delete him
-            Datas.remove(function (err) {
+            Data.remove(function (err) {
                 if (err) throw err;
 
-                console.log('Datas successfully deleted!');
+                console.log('Data successfully deleted!');
             });
         });
 
-        res.render('Data/index', {
+        res.render('Datas/index', {
             title: 'home',
             active: 'account'
         });
     }
 };
 
-module.exports = Data;
+module.exports = Datas;
