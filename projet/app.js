@@ -70,20 +70,39 @@ app.use(function (err, req, res, next) {
 });
 
 // Chargement de socket.io
-var io = require('socket.io').listen(3001);
+var io = require('socket.io').listen(5001);
 
 var net = require('net');
 
 var client = new net.Socket();
-client.connect(3001, '127.0.0.1', function() {
+client.connect(5001, '192.168.233.132', function() {
     console.log('Connected');
+    client.write('test'); 
 });
 
 client.on('data', function(data) {
-    console.log('Received: ' + data);
-    
-});
 
+   //socketio ( io.sockets.emit('ProjetFIN', data) )
+
+   var data = new Buffer(data); 
+
+    console.log('Received: ');
+    console.log(data.toString());
+
+   //var b = new Buffer(255); 
+   //b.write('test'); 
+    //client.send(b, 0, b.length);
+
+io.sockets.on('connection', function (socket) {
+  socket.on('save', function (tampon) { 
+  });
+});    
+});
+var io = require('socket.io')(80);
+
+io.on('connection', function (socket) {
+  socket.broadcast.emit('user connected');
+});
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/data', function(err) {
   if (err) { throw err; }
